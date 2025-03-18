@@ -1,9 +1,16 @@
 import os
+import sys
 import random
 import string
 from flask import Flask, request, render_template, redirect, url_for, abort
 import redis
 from rq import Queue
+
+# Get the parent directory
+parent_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+# Add the parent directory to sys.path
+sys.path.insert(0, parent_dir)
+
 from jobs.analytics import increment_click
 
 app = Flask(__name__)
@@ -45,6 +52,13 @@ def redirect_to_url(short_code):
         return redirect(original_url)  # Redirect to the original URL
     else:
         abort(404)  # Return 404 if short code not found
+
+# /list route to see all your shortened URLs
+# @app.route('/list')
+# def list_urls():
+#     url_keys = r.keys('url:*')
+#     urls = {key.decode('utf-8')[4:]: r.get(key).decode('utf-8') for key in url_keys}
+#     return render_template('list.html', urls=urls)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)  # Run on all interfaces, port 5000

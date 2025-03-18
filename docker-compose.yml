@@ -1,0 +1,25 @@
+name: url-shortener-compose
+
+services:
+  web:
+    image: url-shortner
+    ports:
+      - "5000:5000"
+    environment:
+      - REDIS_URL=redis://redis:6379/0
+    command: python web/app.py
+    depends_on:
+      - redis
+
+  redis:
+    image: redis:6.2
+
+  worker:
+    image: url-shortner
+    environment:
+      - REDIS_URL=redis://redis:6379/0
+    command: rq worker
+    depends_on:
+      - redis
+
+      
