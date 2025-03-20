@@ -54,11 +54,14 @@ def redirect_to_url(short_code):
         abort(404)  # Return 404 if short code not found
 
 # /list route to see all your shortened URLs
-# @app.route('/list')
-# def list_urls():
-#     url_keys = r.keys('url:*')
-#     urls = {key.decode('utf-8')[4:]: r.get(key).decode('utf-8') for key in url_keys}
-#     return render_template('list.html', urls=urls)
+@app.route('/list')
+def list_urls():
+    try:
+        url_keys = r.keys('url:*')
+        urls = {key.decode('utf-8')[4:]: r.get(key).decode('utf-8') for key in url_keys}
+        return render_template('list.html', urls=urls)
+    except Exception as e:
+        return f"Error fetching URLs: {str(e)}", 500
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)  # Run on all interfaces, port 5000
