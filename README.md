@@ -64,6 +64,7 @@ Once the app is running, here’s how to use it:
 ## UI Snapshots
 - **Homepage**: See how the URL shortening form looks:  
   ![Homepage Snapshot](home-snapshot.png)
+
 - **List Page**: View the list of all shortened URLs:  
   ![List Page Snapshot](list-snapshot.png)   
 
